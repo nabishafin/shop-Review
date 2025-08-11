@@ -1,4 +1,4 @@
-// App.tsx
+// App.js
 import { useState, useEffect } from "react";
 import { Navbar } from "./components/Navbar";
 import { HeroSection } from "./components/HeroSection";
@@ -9,34 +9,10 @@ import { TestimonialsSection } from "./components/TestimonialsSection";
 import { FooterSection } from "./components/FooterSection";
 import { Toaster } from "@/components/ui/sonner";
 
-export interface Review {
-  id: string;
-  shopName: string;
-  reviewText: string;
-  rating: number;
-  createdAt: string;
-}
-
-// Data validation function
-function isValidReview(data: any): data is Review {
-  return (
-    typeof data === "object" &&
-    typeof data.id === "string" &&
-    typeof data.shopName === "string" &&
-    typeof data.reviewText === "string" &&
-    typeof data.rating === "number" &&
-    typeof data.createdAt === "string"
-  );
-}
-
-function isValidReviewArray(data: any): data is Review[] {
-  return Array.isArray(data) && data.every(isValidReview);
-}
-
 function App() {
-  const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviews, setReviews] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [editingReview, setEditingReview] = useState<Review | null>(null);
+  const [editingReview, setEditingReview] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   // Load reviews from localStorage on component mount
@@ -45,7 +21,7 @@ function App() {
       const savedReviews = localStorage.getItem("shopReviews");
       if (savedReviews) {
         const parsedReviews = JSON.parse(savedReviews);
-        if (isValidReviewArray(parsedReviews)) {
+        if (Array.isArray(parsedReviews)) {
           setReviews(parsedReviews);
         } else {
           console.warn("Invalid reviews data in localStorage, resetting...");
@@ -70,8 +46,8 @@ function App() {
     }
   }, [reviews, isLoading]);
 
-  const addReview = (reviewData: Omit<Review, "id" | "createdAt">) => {
-    const newReview: Review = {
+  const addReview = (reviewData) => {
+    const newReview = {
       ...reviewData,
       id: Date.now().toString(),
       createdAt: new Date().toISOString(),
@@ -79,7 +55,7 @@ function App() {
     setReviews((prev) => [newReview, ...prev]);
   };
 
-  const updateReview = (updatedReview: Review) => {
+  const updateReview = (updatedReview) => {
     setReviews((prev) =>
       prev.map((review) =>
         review.id === updatedReview.id ? updatedReview : review
@@ -88,7 +64,7 @@ function App() {
     setEditingReview(null);
   };
 
-  const deleteReview = (id: string) => {
+  const deleteReview = (id) => {
     setReviews((prev) => prev.filter((review) => review.id !== id));
   };
 

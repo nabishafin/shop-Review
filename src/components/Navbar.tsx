@@ -14,7 +14,7 @@ export function Navbar() {
               <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
                 ShopReview
               </h1>
-              <p className="text-xs text-gray-500">Experience Reviews</p>
+              <p className="text-xs text-black">Experience Reviews</p>
             </div>
           </div>
 

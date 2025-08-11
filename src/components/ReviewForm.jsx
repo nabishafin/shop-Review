@@ -1,4 +1,3 @@
-// ReviewForm.tsx
 import { useState, useEffect } from "react";
 import { Star, Send, X, Edit2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,19 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import type { Review } from "../App";
 
-interface ReviewFormProps {
-  onSubmit: (review: Omit<Review, "id" | "createdAt"> | Review) => void;
-  editingReview?: Review | null;
-  onCancelEdit?: () => void;
-}
-
-export function ReviewForm({
-  onSubmit,
-  editingReview,
-  onCancelEdit,
-}: ReviewFormProps) {
+export function ReviewForm({ onSubmit, editingReview, onCancelEdit }) {
   const [shopName, setShopName] = useState("");
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
@@ -42,7 +30,7 @@ export function ReviewForm({
     setHoveredRating(0);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!shopName.trim() || !reviewText.trim() || rating === 0) {

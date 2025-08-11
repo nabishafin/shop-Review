@@ -1,4 +1,3 @@
-// ReviewList.tsx
 import { useState } from "react";
 import { Search, Calendar, Edit2, Trash2, Star } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -17,15 +16,6 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
-import type { Review } from "../App";
-
-interface ReviewListProps {
-  reviews: Review[];
-  searchTerm: string;
-  onSearchChange: (term: string) => void;
-  onEdit: (review: Review) => void;
-  onDelete: (id: string) => void;
-}
 
 export function ReviewList({
   reviews,
@@ -33,16 +23,16 @@ export function ReviewList({
   onSearchChange,
   onEdit,
   onDelete,
-}: ReviewListProps) {
-  const [deletingId, setDeletingId] = useState<string | null>(null);
+}) {
+  const [deletingId, setDeletingId] = useState(null);
 
-  const handleDelete = (id: string, shopName: string) => {
+  const handleDelete = (id, shopName) => {
     onDelete(id);
     setDeletingId(null);
     toast.success(`Review for ${shopName} deleted successfully`);
   };
 
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
       month: "short",
@@ -52,7 +42,7 @@ export function ReviewList({
     });
   };
 
-  const renderStars = (rating: number) => {
+  const renderStars = (rating) => {
     return (
       <div className="flex items-center space-x-1">
         {[1, 2, 3, 4, 5].map((star) => (
@@ -68,7 +58,7 @@ export function ReviewList({
     );
   };
 
-  const getRatingColor = (rating: number) => {
+  const getRatingColor = (rating) => {
     if (rating >= 4) return "bg-green-100 text-green-800";
     if (rating >= 3) return "bg-yellow-100 text-yellow-800";
     if (rating >= 2) return "bg-orange-100 text-orange-800";
